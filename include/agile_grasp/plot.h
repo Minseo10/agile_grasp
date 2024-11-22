@@ -42,6 +42,7 @@
 #include <agile_grasp/grasp_hypothesis.h>
 #include <agile_grasp/handle.h>
 #include <agile_grasp/quadric.h>
+#include <boost/thread/thread.hpp> // ROS upgrade: Melodic -> Noetic
 
 typedef pcl::PointCloud<pcl::PointNormal> PointCloudNormal;
 typedef pcl::PointCloud<pcl::PointXYZRGBA> PointCloud;

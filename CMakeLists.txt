@@ -4,8 +4,8 @@ project(agile_grasp)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS cmake_modules cv_bridge eigen_conversions geometry_msgs 
-message_generation pcl_conversions roscpp sensor_msgs std_msgs visualization_msgs)
+find_package(catkin REQUIRED COMPONENTS cmake_modules cv_bridge eigen_conversions geometry_msgs
+message_generation pcl_conversions roscpp sensor_msgs std_msgs visualization_msgs actionlib actionlib_msgs rail_grasp_calculation_msgs tf tf_conversions)
 
 ## System dependencies are found with CMake's conventions
 find_package(Eigen REQUIRED)
@@ -66,7 +66,7 @@ catkin_package(
 #  LIBRARIES grasp_affordances
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
- INCLUDE_DIRS 
+ INCLUDE_DIRS
   include
  LIBRARIES
   quadric
@@ -84,19 +84,21 @@ catkin_package(
  CATKIN_DEPENDS
 	cmake_modules
 	cv_bridge
-  eigen_conversions 
-  geometry_msgs 
-  message_runtime 
+  eigen_conversions
+  geometry_msgs
+  message_runtime
   pcl_conversions
-  roscpp 
+  roscpp
   sensor_msgs
   std_msgs
   visualization_msgs
- DEPENDS 
+  tf
+  tf_conversions
+ DEPENDS
   Eigen
   LAPACK
   OpenCV
-  PCL  
+  PCL
 )
 
 ###########
@@ -136,6 +138,7 @@ add_executable(find_grasps src/nodes/find_grasps.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(grasp_localizer_node grasp_localizer_generate_messages_cpp)
+add_dependencies(grasp_localizer rail_grasp_calculation_msgs_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(quadric ${PCL_LIBRARIES} lapack)

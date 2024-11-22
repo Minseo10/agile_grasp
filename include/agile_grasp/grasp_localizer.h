@@ -32,11 +32,15 @@
 #ifndef GRASP_LOCALIZER_H_
 #define GRASP_LOCALIZER_H_
 
+#include <boost/thread/mutex.hpp> //add
+
 #include <eigen_conversions/eigen_msg.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <tf_conversions/tf_eigen.h> //add
 
+#include <pcl/common/common.h>//add
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 
@@ -52,7 +56,13 @@
 #include <agile_grasp/localization.h>
 #include <agile_grasp/rotating_hand.h>
 
+/////////////////////////////////////
+#include <actionlib/server/simple_action_server.h>
+#include <rail_grasp_calculation_msgs/SampleGraspsAction.h>
+/////////////////////////////////////////////////////
+
 typedef pcl::PointCloud<pcl::PointXYZRGBA> PointCloud;
+//typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
 /** GraspLocalizer class
  *
@@ -123,6 +133,13 @@ class GraspLocalizer {
   void localizeGrasps();
 
  private:
+ ////////////////////////////
+//  void sampleGrasps(const rail_grasp_calculation_msgs::SampleGraspsGoalConstPtr &goal);
+//  void sampleClassifyGrasps(const rail_grasp_calculation_msgs::SampleGraspsGoalConstPtr &goal);
+//  static void createPoseArray(const std::vector<GraspHypothesis> &grasps, geometry_msgs::PoseArray &graspList);
+//
+//  static void createPoseArray(const agile_grasp::Grasps &grasps, geometry_msgs::PoseArray &graspList);
+  //////////////////////////////
   /**
    * \brief Callback function for the ROS topic that contains the input point
    * cloud.
@@ -193,6 +210,12 @@ class GraspLocalizer {
   int num_clouds_;  ///< the maximum number of point clouds that can be received
   int size_left_;   ///< the size of the first point cloud
   int min_inliers_;  ///< the minimum number of inliers for the handle search
+
+///////////////////////////////////////////////////
+//  actionlib::SimpleActionServer<rail_grasp_calculation_msgs::SampleGraspsAction> sampleServer;
+//  actionlib::SimpleActionServer<rail_grasp_calculation_msgs::SampleGraspsAction> sampleClassifyServer;
+//  boost::mutex sampleMutex;
+//////////////////////////////////////////////////
 
   /** constants for input point cloud types */
   static const int POINT_CLOUD_2 = 0;  ///< sensor_msgs/PointCloud2

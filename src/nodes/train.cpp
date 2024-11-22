@@ -9,6 +9,8 @@
 
 int main(int argc, char** argv) {
   if (argc > 3) {
+    boost::filesystem::path full_path(boost::filesystem::current_path());
+    std::cout << "Current path is : " << full_path << std::endl;
     // get list of PCD-files for training
     int num_files = atoi(argv[1]);
     std::string pcd_dir = argv[2];
@@ -34,7 +36,7 @@ int main(int argc, char** argv) {
       std::cout << "No workspace.txt file found in pcd directory\n";
       std::cout << " Using standard workspace limits\n";
       Eigen::VectorXd ws(6);
-      ws << 0.65, 0.9, -0.1, 0.1, -0.2, 1.0;
+      ws << -0.85, -0.30, -0.35, 0.38, 0.8, 1.3;
       for (int i = 0; i < files.size(); i++) workspace_mat.row(i) = ws;
     } else {
       std::ifstream file_ws(file_name.c_str());
@@ -89,8 +91,10 @@ int main(int argc, char** argv) {
     std::vector<int> hand_list_sizes(files.size());
     for (int i = 0; i < files.size(); i++) {
       std::cout << " Creating training data from file " << files[i] << " ...\n";
-      std::string file_left = files[i] + "l_reg.pcd";
-      std::string file_right = files[i] + "r_reg.pcd";
+      //std::string file_left = files[i]+ "l_reg.pcd";
+      std::string file_left = files[i]+ ".pcd";
+//      std::string file_right = files[i] + "r_reg.pcd";
+      std::string file_right = files[i] + ".pcd";
       loc.setWorkspace(workspace_mat.row(i));
       std::vector<GraspHypothesis> hands =
           loc.localizeHands(file_left, file_right, true, true);

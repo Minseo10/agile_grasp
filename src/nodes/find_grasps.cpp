@@ -1,7 +1,9 @@
 #include <ros/ros.h>
 
 #include <agile_grasp/Grasp.h>
-#include <agile_grasp/grasp_localizer.h>
+#include <agile_grasp/Grasps.h> //
+#include <agile_grasp/grasp_localizer.h> //msg is here
+
 
 const std::string CLOUD_TOPIC = "input_cloud";
 const std::string CLOUD_FRAME = "camera_rgb_optical_frame";
@@ -9,11 +11,11 @@ const std::string SVM_FILE_NAME = "/home/baxter/svm";
 const int NUM_THREADS = 1;
 const int NUM_SAMPLES = 2000;
 const int NUM_CLOUDS = 2;
-const double FINGER_WIDTH = 0.01;
-const double HAND_OUTER_DIAMETER = 0.09;
-const double HAND_DEPTH = 0.06;
-const double INIT_BITE = 0.01;
-const double HAND_HEIGHT = 0.02;
+const double FINGER_WIDTH = 0.017;
+const double HAND_OUTER_DIAMETER = 0.157;
+const double HAND_DEPTH = 0.115;
+const double INIT_BITE = 0.080;
+const double HAND_HEIGHT = 0.132;
 // const double WORKSPACE[6] = {0.65, 0.9, -0.2, 0.07, -0.3, 1.0};
 const double WORKSPACE[6] = {-1.0, 1.0, -1.0, 1.0, -1.0, 1.0};
 const int MIN_HANDLE_INLIERS = 3;
@@ -91,9 +93,9 @@ int main(int argc, char** argv) {
   std::cout << " Robot Hand Model\n";
   std::cout << "  finger_width: " << params.finger_width_ << "\n";
   std::cout << "  hand_outer_diameter: " << params.hand_outer_diameter_ << "\n";
-  std::cout << "  hand_depth: " << params.finger_width_ << "\n";
-  std::cout << "  init_bite: " << params.finger_width_ << "\n";
-  std::cout << "  hand_height: " << params.finger_width_ << "\n";
+  std::cout << "  hand_depth: " << params.hand_depth_ << "\n";
+  std::cout << "  init_bite: " << params.init_bite_ << "\n";
+  std::cout << "  hand_height: " << params.hand_height_ << "\n";
   std::cout << " Antipodal Grasps Prediction\n";
   std::cout << "  svm_file_name: " << svm_file_name << "\n";
   std::cout << " Handle Search\n";
@@ -105,6 +107,7 @@ int main(int argc, char** argv) {
   GraspLocalizer loc(node, cloud_topic, cloud_frame, cloud_type, svm_file_name,
                      params);
   loc.localizeGrasps();
+
 
   return 0;
 }

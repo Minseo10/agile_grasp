@@ -248,7 +248,7 @@ void Learning::convertData(const std::vector<Instance>& instances,
   cv::HOGDescriptor hog;
   hog.winSize = cv::Size(64, 64);
   cv::Mat features(instances.size(), hog.getDescriptorSize() * 2, CV_32FC1);
-  cv::Mat labels(instances.size(), 1, CV_32FC1);
+  cv::Mat labels(instances.size(), 1, CV_32S);
   int num_positives = 0;
 
   for (int i = 0; i < instances.size(); i++) {

@@ -106,8 +106,8 @@ void GraspLocalizer::localizeGrasps() {
       ros::Duration(1.0).sleep();
 
       // publish hands contained in handles
-      grasps_pub_.publish(createGraspsMsgFromHands(handles_));
-      ros::Duration(1.0).sleep();
+//      grasps_pub_.publish(createGraspsMsgFromHands(handles_));
+//      ros::Duration(1.0).sleep();
 
       // reset
       num_clouds_received_ = 0;
@@ -140,6 +140,7 @@ agile_grasp::Grasp GraspLocalizer::createGraspMsg(const GraspHypothesis& hand) {
   return msg;
 }
 
+// I don't need this part!!
 agile_grasp::Grasps GraspLocalizer::createGraspsMsgFromHands(
     const std::vector<Handle>& handles) {
   agile_grasp::Grasps msg;
